@@ -41,7 +41,7 @@ public class userValidator {
 			
 		}
 		else {
-			System.out.println("Ivalid usrname or password.");
+			System.out.println("Invalid username or password.");
 		}
 	}
 
