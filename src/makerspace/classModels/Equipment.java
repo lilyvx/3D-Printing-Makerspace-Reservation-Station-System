@@ -1,4 +1,4 @@
-package makerspace.main;
+package makerspace.classModels;
 
 public class Equipment {
 

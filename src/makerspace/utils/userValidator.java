@@ -62,6 +62,4 @@ public class userValidator {
 		
 		
 	}
-	private int numl;
->>>>>>> branch 'master' of https://github.com/IcarusFlew-SE/3D-Printing-Makerspace-Reservation-Station-System
 }
