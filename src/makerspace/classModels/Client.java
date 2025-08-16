@@ -5,6 +5,7 @@ import java.util.List;
 public class Client extends User {
 	
 	private List<Reservation> reservationHistory;
+	public List<Reservation> getReservationHistory() { return reservationHistory; }
 	
 	public Client(String userId, String username, String password)
 	{
