@@ -29,7 +29,7 @@ public class userValidator {
 		}  
 	}
 
-	private void loginUser(Scanner scanner2) {
+	private void loginUser(Scanner scanner) {
 		System.out.println("Enter your username: ");
 		String username = scanner.nextLine();
 		
@@ -45,18 +45,18 @@ public class userValidator {
 		}
 	}
 
-	private void registerUser(Scanner scanner2) {
+	private void registerUser(Scanner scanner) {
 		System.out.println("Enter a username: ");
 		String username = scanner.nextLine();
 		System.out.println("Enter a password: ");
 		String password = scanner.nextLine();
 		
 		if(accounts.containsKey(username)) {
-			System.out.println("Username exist.Plase choose another,");
+			System.out.println("Username already exists. Please choose another,");
 			
 		}else {
 			accounts.put(username, password);
-			System.out.println("Reggister sucessful.");
+			System.out.println("Register successful.");
 			
 		}
 		

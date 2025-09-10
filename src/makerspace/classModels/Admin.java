@@ -24,20 +24,13 @@ public class Admin extends User {
 		List<String> perm = new ArrayList<>();
 		switch (level) {
 		case "prime":
-			perm.addAll(List.of("User Management", 
-					"Equipment Management",
-					"System Config",
-					"Reports",
-					"Billing"));
+			perm.addAll(List.of("User Management", "Equipment Management", "System Config", "Reports", "Billing"));
 			break;
 		case "manager":
-			perm.addAll(List.of("Equipment Management", 
-					"Reports",
-					"Billing"));
+			perm.addAll(List.of("Equipment Management", "Reports", "Billing"));
 			break;
 		case "assistant":
-			perm.addAll(List.of("User Management",
-					"Basic Reports"));
+			perm.addAll(List.of("User Management", "Basic Reports"));
 			break;
 		default:
 			perm.add("No permissions assigned");
