@@ -13,9 +13,9 @@ public class Client extends User {
 	public String getUserLevel() { return userLevel; }
 	public void setUserLevel(String userLevel) { this.userLevel = userLevel; }	
 	
-	public Client(String userId, String username, String password)
+	public Client(String userId, String username, String email, String password)
 	{
-		super(userId, username, password);
+		super(userId, username, email, password);
 		this.accountBalance = 0.0;
 		this.reservationHistory = new ArrayList<>();
 		this.userLevel = "standard";
