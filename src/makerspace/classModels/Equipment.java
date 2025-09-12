@@ -12,6 +12,7 @@ public class Equipment {
 	
 	protected String status;
 	public String getStatus() { return status; }
+	public void setStatus(String status) { this.status = status; }
 	
 	protected String location;
 	public String getLocation() { return location; }
@@ -25,5 +26,5 @@ public class Equipment {
 		this.location = location;
 	}
 	
-	
+	public boolean isAvailable() { return status.equals("Available"); }
 }
