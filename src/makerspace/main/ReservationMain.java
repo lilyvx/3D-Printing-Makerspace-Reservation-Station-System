@@ -44,11 +44,12 @@ public class ReservationMain {
     }
     
     private void showLoginMenu() {
-        System.out.println("\n=== Login Menu ===");
+        System.out.println("\n====== Login Menu ======");
         System.out.println("1. Login");
         System.out.println("2. Register as Client");
         System.out.println("3. Register as Admin");
         System.out.println("4. Exit");
+        System.out.println("---------------------------");
         System.out.println("What Would You Like To Do?");
         System.out.print("OPTION: ");
         
@@ -74,7 +75,7 @@ public class ReservationMain {
     }
     
     private void showMainMenu() {
-        System.out.println("\n=== Main Menu ===");
+        System.out.println("\n====== Main Menu ======");
         System.out.println("Current User: " + currentUser.getUsername() + " (" + currentUser.getUserType() + ")");
         
         if (currentUser instanceof Client) {
@@ -94,6 +95,7 @@ public class ReservationMain {
         System.out.println("5. Add Funds to Account");
         System.out.println("6. View 3D Printers");
         System.out.println("7. Logout");
+        System.out.println("------------------------");
         System.out.print("Choose option: ");
         
         int choice = getIntInput();
@@ -134,6 +136,7 @@ public class ReservationMain {
         System.out.println("5. Generate Reports");
         System.out.println("6. Equipment Maintenance");
         System.out.println("7. Logout");
+        System.out.println("------------------------");
         System.out.print("Choose option: ");
         
         int choice = getIntInput();
@@ -180,12 +183,12 @@ public class ReservationMain {
     }
     
     private void registerClient() {
-        System.out.println("\n=== Client Registration ===");
-        System.out.print("Username: ");
+        System.out.println("\n====== Client Registration ======");
+        System.out.print("Create Username: ");
         String username = scanner.nextLine();
-        System.out.print("Email: ");
+        System.out.print("Enter Email: ");
         String email = scanner.nextLine();
-        System.out.print("Password: ");
+        System.out.print("Create Password: ");
         String password = scanner.nextLine();
         
         try {
@@ -197,12 +200,12 @@ public class ReservationMain {
     }
     
     private void registerAdmin() {
-        System.out.println("\n=== Admin Registration ===");
-        System.out.print("Username: ");
+        System.out.println("\n====== Admin Registration ======");
+        System.out.print("Create Username: ");
         String username = scanner.nextLine();
-        System.out.print("Email: ");
+        System.out.print("Enter Email: ");
         String email = scanner.nextLine();
-        System.out.print("Password: ");
+        System.out.print("Create Password: ");
         String password = scanner.nextLine();
         System.out.print("Admin Level (Top Admin/Manager/Assistant): ");
         String adminLevel = scanner.nextLine();
@@ -216,7 +219,7 @@ public class ReservationMain {
     }
     
     private void browseEquipment() {
-        System.out.println("\n=== Available Equipment ===");
+        System.out.println("\n====== Available Equipment ======");
         List<Equipment> available = equipmentService.getAvailableEquipment();
         
         if (available.isEmpty()) {
@@ -232,7 +235,7 @@ public class ReservationMain {
     }
     
     private void view3DPrinters() {
-        System.out.println("\n=== 3D Printers ===");
+        System.out.println("\n====== 3D Printers ======");
         List<Printer3D> printers = equipmentService.get3DPrinters();
         
         if (printers.isEmpty()) {
@@ -254,7 +257,7 @@ public class ReservationMain {
     }
     
     private void makeReservation() {
-        System.out.println("\n=== Make Reservation ===");
+        System.out.println("\n====== Make Reservation ======");
         
         // Show available equipment
         List<Equipment> available = equipmentService.getAvailableEquipment();
@@ -365,7 +368,7 @@ public class ReservationMain {
     
     // Admin Functions
     private void manageEquipment() {
-        System.out.println("\n=== Equipment Management ===");
+        System.out.println("\n====== Equipment Management ======");
         List<Equipment> allEquipment = equipmentService.getAvailableEquipment();
         
         for (Equipment eq : allEquipment) {
@@ -397,7 +400,7 @@ public class ReservationMain {
     }
     
     private void viewAllReservations() {
-        System.out.println("\n=== All Reservations ===");
+        System.out.println("\n====== All Reservations ======");
         List<Reservation> allReservations = reservationService.getAllReservations();
         
         if (allReservations.isEmpty()) {
@@ -411,7 +414,7 @@ public class ReservationMain {
     }
     
     private void manageUsers() {
-        System.out.println("\n=== User Management ===");
+        System.out.println("\n====== User Management ======");
         List<User> allUsers = userService.getAllUsers();
         
         System.out.println("All Users:");
@@ -423,7 +426,7 @@ public class ReservationMain {
     }
     
     private void addNewEquipment() {
-        System.out.println("\n=== Add New Equipment ===");
+        System.out.println("\n====== Add New Equipment ======");
         System.out.println("1. Add 3D Printer");
         System.out.println("2. Add Other Equipment");
         System.out.print("Choose type: ");
@@ -466,7 +469,7 @@ public class ReservationMain {
             return;
         }
         
-        System.out.println("\n=== Reports ===");
+        System.out.println("\n====== Reports ======");
         System.out.println("1. Equipment Usage Report");
         System.out.println("2. Revenue Report");
         System.out.println("3. User Activity Report");
@@ -490,7 +493,7 @@ public class ReservationMain {
     }
     
     private void generateEquipmentUsageReport() {
-        System.out.println("\n=== Equipment Usage Report ===");
+        System.out.println("\n====== Equipment Usage Report ======");
         List<Equipment> equipment = equipmentService.getAvailableEquipment();
         List<Reservation> reservations = reservationService.getAllReservations();
         
@@ -504,7 +507,7 @@ public class ReservationMain {
     }
     
     private void generateRevenueReport() {
-        System.out.println("\n=== Revenue Report ===");
+        System.out.println("\n====== Revenue Report ======");
         List<Reservation> reservations = reservationService.getAllReservations();
         
         double totalRevenue = reservations.stream()
@@ -520,7 +523,7 @@ public class ReservationMain {
     }
     
     private void generateUserActivityReport() {
-        System.out.println("\n=== User Activity Report ===");
+        System.out.println("\n====== User Activity Report ======");
         List<Client> clients = userService.getAllClients();
         
         System.out.println("Client Activity:");
@@ -532,7 +535,7 @@ public class ReservationMain {
     }
     
     private void equipmentMaintenance() {
-        System.out.println("\n=== Equipment Maintenance ===");
+        System.out.println("\n====== Equipment Maintenance ======");
         System.out.print("Enter Equipment ID for maintenance: ");
         String equipmentId = scanner.nextLine();
         
