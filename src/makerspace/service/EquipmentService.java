@@ -62,8 +62,7 @@ public class EquipmentService {
         dbService.updateEquipment(eq);
     }
     
-    public boolean isEquipmentAvailable(String equipmentId, LocalDateTime startTime, 
-                                       LocalDateTime endTime) throws EquipmentUnavailableException {
+    public boolean isEquipmentAvailable(String equipmentId, LocalDateTime startTime, LocalDateTime endTime) throws EquipmentUnavailableException {
         Equipment eq = getEquipmentById(equipmentId);
         return eq.isAvailable(); //used to check reservations (Simplified)
     }
@@ -74,7 +73,7 @@ public class EquipmentService {
     
     private void initializeDefaultEquipment() {
         // Initial default 3D Printers
-        add3DPrinter("Prusa i3 MK3S+", 15.0, "Lab A", "FDM", "250x210x210mm");
+        add3DPrinter("Prusa i3 MK3S+", 15.0, "Lab A", "FDM", "250x210x210mm"); //printer name, hourly rate, location, print tech, max print size
         add3DPrinter("Formlabs Form 3", 25.0, "Lab B", "SLA", "145x145x185mm");
         add3DPrinter("Ultimaker S5", 20.0, "Lab A", "FDM", "330x240x300mm");
         

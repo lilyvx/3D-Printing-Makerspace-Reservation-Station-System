@@ -45,7 +45,7 @@ public class Equipment {
 	
 	public String getEquipmentInfo()
 	{
-		return String.format("Equipment ID: %s --- %s (%s) | %.2f/HR",
+		return String.format("Equipment ID: %s --- %s (%s) | $%.2f/HR",
 				equipmentId,
 				name,
 				equipmentType,
