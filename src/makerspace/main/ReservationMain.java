@@ -385,7 +385,7 @@ public class ReservationMain {
     private void changeEquipmentStatus() {
         System.out.print("Enter Equipment ID: ");
         String equipmentId = scanner.nextLine();
-        System.out.print("New Status (AVAILABLE/MAINTENANCE/OUT_OF_ORDER): ");
+        System.out.print("New Status (AVAILABLE/MAINTENANCE/DOWN): ");
         String status = scanner.nextLine();
         
         try {
