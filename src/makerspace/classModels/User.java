@@ -32,9 +32,9 @@ public abstract class User {
     	this.registerDate = LocalDateTime.now();
     }
     
-    public boolean authentication(String inputUsername, String inputPassword)
+    public boolean authentication(String inputPassword)
     {
-    	return this.username.equals(inputUsername) && this.password.equals(inputPassword);
+    	return this.password.equals(inputPassword);
     }
     
     @Override

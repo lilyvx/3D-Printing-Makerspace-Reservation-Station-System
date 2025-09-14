@@ -15,21 +15,21 @@ public class DateTimeHandler {
 		return dateTime.format(formatter);
 	}
 	
-	public static boolean isValidDateTimeString(String dateTimeStr)
-	{
-		try {
-			LocalDateTime.parse(dateTimeStr, formatter);
-			return true;
-		}
-		catch(DateTimeParseException err)
-		{
-			throw err;
-		}
-	}
-	
+	// Rounds to nearest hr
 	public static LocalDateTime roundToNextHour(LocalDateTime dateTime)
 	{
 		return dateTime.withMinute(0).withSecond(0).withNano(0);
+	}
+	
+	public static boolean isValidFutureDateTIme(LocalDateTime dateTime)
+	{
+		return dateTime.isAfter(LocalDateTime.now());
+	}
+	
+	public static boolean isWorking(LocalDateTime dateTime)
+	{
+		int hour = dateTime.getHour();
+		return hour >= 10 && hour < 20; //10AM to 8PM
 	}
 	
 	public static String getCurrentDateTimeString()

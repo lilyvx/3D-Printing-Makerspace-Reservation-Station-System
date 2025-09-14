@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Reservation {
 	private String reservationId;
-    private String userId;
+    private String clientId;
     private String equipmentId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -13,7 +13,7 @@ public class Reservation {
     private double cost;
 
     public String getReservationId() { return reservationId; }
-    public String getUserId() { return userId; }
+    public String getClientId() { return clientId; }
     public String getEquipmentId() { return equipmentId; }
     public String getStatus() { return status; }
     public LocalDateTime getStartTime() { return startTime; }
@@ -25,16 +25,21 @@ public class Reservation {
     public void setCost(double cost) { this.cost = cost;}
 
     //constructor
-    public Reservation (String reservationId, String userId, String equipmentId, LocalDateTime startTime, LocalDateTime endTime) 
-     { this.reservationId = reservationId; 
-       this.userId = userId;
+    public Reservation (String reservationId, String clientId, String equipmentId, LocalDateTime startTime, LocalDateTime endTime) 
+    { this.reservationId = reservationId; 
+       this.clientId = clientId;
        this.equipmentId = equipmentId;
        this.startTime = startTime;
        this.endTime = endTime;
        this.status = "Pending"; 
        this.createdAt = LocalDateTime.now();
-       }
-    //should implement validation if can be cancelled or approved
+    }
+    
+    public boolean canBeCancelled()
+    {
+    	LocalDateTime now = LocalDateTime.now();
+    	return now.isBefore(startTime) && ("Pending".equals(status) || "Approved".equals(status));
+    }
     public void cancel() { this.status = "cancelled"; }
     public void approve() { this.status = "approved"; }
     public void complete() { this.status = "completed"; }
@@ -43,7 +48,13 @@ public class Reservation {
     {
     	return (int) Duration.between(startTime, endTime).toHours(); //body type is long converted to integer
     }
-	
+    
+    public boolean isActive() 
+    {
+        LocalDateTime now = LocalDateTime.now();
+        return now.isAfter(startTime) && now.isBefore(endTime) && "CONFIRMED".equals(status);
+    }
+    
     @Override
     public String toString()
     {
