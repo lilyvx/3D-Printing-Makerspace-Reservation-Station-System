@@ -24,9 +24,22 @@ public class ReservationService {
         validateReservationInput(clientId, equipmentId, startTime, endTime);
         
         // Check equipment availability
-        if (!equipmentService.isEquipmentAvailable(equipmentId, startTime, endTime)) {
-            throw new EquipmentUnavailableException("Equipment not available for selected time");
+       // if (!equipmentService.isEquipmentAvailable(equipmentId, startTime, endTime)) {
+       //     throw new EquipmentUnavailableException("Equipment not available for selected time");
+       // }
+        //replaced above code with this..
+        boolean overlaps = false;
+
+        for (Reservation r : reservations.values()) {
+        // check reservations for the same equipment
+            if (r.getEquipmentId().equals(equipmentId)) {
+        // Check if times overlap
+        boolean doesOverlap = !(endTime.isBefore(r.getStartTime()) || startTime.isAfter(r.getEndTime()));
+        if (doesOverlap) {
+            overlaps = true;
+            break; } // no need to check further once we find an overlap 
         }
+    }
         
         // Check user exists and is a client
         User user = userService.getUserById(clientId);
