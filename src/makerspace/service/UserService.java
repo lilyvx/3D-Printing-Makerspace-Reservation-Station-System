@@ -99,6 +99,30 @@ public class UserService {
         }
     }
     
+    public void updateUserEmail(String userId, String newEmail) throws UserException, InvalidReservationException {
+		User user = getUserById(userId);
+		if (newEmail == null || !newEmail.contains("@")) {
+		throw new InvalidReservationException("Invalid Email Format");
+		}
+		user.setEmail(newEmail);
+		dbService.updateUser(user);
+	}
+    
+    public void updateUserPassword(String userId, String newPassword) throws UserException, InvalidReservationException {
+    	User user = getUserById(userId);
+    	if (newPassword == null || newPassword.length() < 6) {
+    	throw new InvalidReservationException("Password Must Be At Least 6 Characters Long");
+    	}
+    	user.setPassword(newPassword);
+    	dbService.updateUser(user);
+    }
+    
+    public void deleteUser(String userId) throws UserException {
+		User user = getUserById(userId);
+		users.remove(userId);
+		dbService.deleteUser(userId);
+	}
+    
     private String generateUserId() {
         return "USER_" + System.currentTimeMillis();
     }

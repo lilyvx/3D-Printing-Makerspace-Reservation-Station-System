@@ -8,6 +8,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ReservationMain {
+	
+	public static void main(String[] args) {
+        ReservationMain app = new ReservationMain();
+        app.run();
+    }
+	
     private UserService userService;
     private EquipmentService equipmentService;
     private ReservationService reservationService;
@@ -19,11 +25,6 @@ public class ReservationMain {
         this.equipmentService = new EquipmentService();
         this.reservationService = new ReservationService(equipmentService, userService);
         this.scanner = new Scanner(System.in);
-    }
-    
-    public static void main(String[] args) {
-        ReservationMain app = new ReservationMain();
-        app.run();
     }
     
     public void run() {
@@ -283,8 +284,10 @@ public class ReservationMain {
         String startTimeStr = scanner.nextLine();
         System.out.print("Duration in hours: ");
         int duration = getIntInput();
-        System.out.print("Purpose/Project description: ");
-        String purpose = scanner.nextLine();
+        if (duration <= 0) {
+			System.out.println("Invalid duration.");
+			return;
+		}
         
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -293,7 +296,7 @@ public class ReservationMain {
             
             String reservationId = reservationService.createReservation(
                 currentUser.getUserId(), selectedEquipment.getEquipmentId(),
-                startTime, endTime, purpose);
+                startTime, endTime);
                 
             System.out.println("Reservation created successfully!");
             System.out.println("Reservation ID: " + reservationId);
@@ -380,6 +383,18 @@ public class ReservationMain {
         if (choice == 1) {
             changeEquipmentStatus();
         }
+        else if (choice == 2) {
+			System.out.print("Enter Equipment ID: ");
+			String equipmentId = scanner.nextLine();
+			try {
+				Equipment eq = equipmentService.getEquipmentById(equipmentId);
+				System.out.println(eq);
+			} catch (EquipmentUnavailableException e) {
+				System.out.println("Retrieval Error: " + e.getMessage());
+			}
+		} else {
+			System.out.println("Invalid Option.");
+		}
     }
     
     private void changeEquipmentStatus() {
@@ -420,6 +435,45 @@ public class ReservationMain {
                              user.getUserId(), user.getUsername(), 
                              user.getUserType(), user.getEmail());
         }
+        System.out.println("\n1. Change User Email");
+        System.out.println("2. Change User Password");
+        System.out.println("3. Delete User");
+        System.out.print("Choose action: ");
+        int choice = getIntInput();
+        
+        System.out.print("Enter User ID: ");
+        String userId = scanner.nextLine();
+        try {
+			User user = userService.getUserById(userId);
+			if (choice == 1) {
+				System.out.print("New Email: ");
+				String newEmail = scanner.nextLine();
+				user.setEmail(newEmail);
+				System.out.println("Email updated successfully!");
+			} 
+			else if (choice == 2) {
+				System.out.print("New Password: ");
+				String newPassword = scanner.nextLine();
+				user.setPassword(newPassword);
+				System.out.println("Password updated successfully!");
+			} 
+			else if (choice == 3) {
+				System.out.println("Are You Sure You Want To Delete This User? (yes/no)");
+				String confirm = scanner.nextLine();
+				
+				if (confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y")) {
+					userService.deleteUser(userId);
+					System.out.println("User deleted successfully!");
+				} else {
+					System.out.println("User deletion cancelled.");
+				}
+			} 
+			else {
+				System.out.println("Invalid action.");
+			}
+		} catch (UserException e) {
+			System.out.println("Error: " + e.getMessage());
+		} 
     }
     
     private void addNewEquipment() {
@@ -430,18 +484,18 @@ public class ReservationMain {
         
         int choice = getIntInput();
         
-        System.out.print("Equipment Name: ");
+        System.out.println("Equipment Name: ");
         String name = scanner.nextLine();
-        System.out.print("Hourly Rate: $");
+        System.out.println("Hourly Rate: $");
         double rate = getDoubleInput();
-        System.out.print("Location: ");
+        System.out.println("Location: ");
         String location = scanner.nextLine();
         
         try {
             if (choice == 1) {
                 System.out.print("Print Technology (FDM/SLA/SLS): ");
                 String tech = scanner.nextLine();
-                System.out.print("Max Print Size: ");
+                System.out.print("Max Print Size (XxYxZmm): ");
                 String maxSize = scanner.nextLine();
                 
                 String id = equipmentService.add3DPrinter(name, rate, location, tech, maxSize);
@@ -494,7 +548,7 @@ public class ReservationMain {
         List<Equipment> equipment = equipmentService.getAvailableEquipment();
         List<Reservation> reservations = reservationService.getAllReservations();
         
-        System.out.println("Equipment Utilization:");
+        System.out.println("Equipment Usage:");
         for (Equipment eq : equipment) {
             long count = reservations.stream()
                                    .filter(r -> r.getEquipmentId().equals(eq.getEquipmentId()))
@@ -549,7 +603,7 @@ public class ReservationMain {
         System.out.println("Logged out successfully!");
     }
     
-    // Utility methods
+    // Utility for Inputs
     private int getIntInput() {
         try {
             return Integer.parseInt(scanner.nextLine());

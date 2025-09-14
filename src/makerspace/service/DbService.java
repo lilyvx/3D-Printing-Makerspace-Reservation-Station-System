@@ -54,15 +54,15 @@ public class DbService {
 	        String email = parts[3];
 	        String password = "password"; // Default password for loaded users
 	        
-	        if ("Client".equals(type) && parts.length >= 7) {
+	        if ("Client".equals(type) && parts.length >= 6) {
 	            Client client = new Client(id, username, email, password);
-	            client.updateAccountBalance(Double.parseDouble(parts[6]));
+	            client.updateAccountBalance(Double.parseDouble(parts[5]));
 	            if (parts.length >= 8) {
 	                client.setUserLevel(parts[7]);
 	            }
 	            return client;
-	        } else if ("Admin".equals(type) && parts.length >= 7) {
-	            return new Admin(id, username, email, password, parts[6]);
+	        } else if ("Admin".equals(type) && parts.length >= 5) {
+	            return new Admin(id, username, email, password, parts[5]);
 	        }
 	        
 	        return null;
@@ -95,6 +95,33 @@ public class DbService {
 	        
 	 }
 	 
+	 public void updateUser(User user) {
+	        // Append the updated user to file
+	        saveUser(user);
+	 }
+	 
+	 public void deleteUser(String userId) {
+		 deleteLineFromFile(USERS_FILE, userId);
+	 }
+	 
+	private void deleteLineFromFile(String usersFile, String userId) {
+		File inputFile = new File(usersFile);
+		File tempFile = new File("tempfile.txt");
+		try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+				PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				if (!line.contains(userId)) {
+					writer.println(line);
+					writer.flush();
+				}
+			}
+		} catch (IOException e) {
+			System.err.println("Error deleting user: " + e.getMessage());
+		}
+		
+	}
+
 	private String equipmentToString(Equipment equipment) {
         if (equipment instanceof Printer3D) {
             Printer3D printer = (Printer3D) equipment;

@@ -18,8 +18,7 @@ public class ReservationService {
     }
     
     public String createReservation(String clientId, String equipmentId, 
-                                   LocalDateTime startTime, LocalDateTime endTime, 
-                                   String purpose) throws Exception {
+                                   LocalDateTime startTime, LocalDateTime endTime) throws Exception {
         // Validation
         validateReservationInput(clientId, equipmentId, startTime, endTime);
         
@@ -87,7 +86,7 @@ public class ReservationService {
             throw new InvalidReservationException("Reservation cannot be cancelled");
         }
         
-        // Process refund (could be partial based on cancellation policy)
+        // Process refund 
         Client client = (Client) userService.getUserById(userId);
         double refundAmount = calculateRefund(reservation);
         client.updateAccountBalance(refundAmount);
